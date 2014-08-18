@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>
+            socket.io testings
+        </title>
+    </head>
+    <body>
+        <input type="text" placeholder="name" id="name" />
+        <textarea id="message"></textarea>
+        <a href="#" id="send-message">Send</a>
+        <ul id="append-list">
+        </ul>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+        <script>
+            $(document).ready(function () {
+                var socket = io.connect('http://localhost:8080'),
+                    append_list = $('#append-list');
+
+                function addMessageToList(data) {
+                    if ('action' in data) {
+                        append_list.append('<li>' + text);
+                    } else {
+                        append_list.append('<li>' + data.name + ': ' + data.message);
+                    }
+                }
+
+                $('#send-message').click(function(event) {
+                    event.preventDefault();
+                    var d = {
+                        name: $('#name').val(),
+                        message: $('#message').val()
+                    };
+                    socket.emit('recieve message', d);
+                });
+
+                socket.on('connect', function(data) {
+                    addTextToList('Connected to server');
+                });
+
+                socket.on('client connected', function(data) {
+                    addMessageToList(data);
+                });
+
+                socket.on('push message', function (data) {
+                    addMessageToList(data);
+                });
+            });
+        </script>
+    </body>
+</html>

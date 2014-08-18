@@ -1,0 +1,9 @@
+{
+  "name": "js-socketio",
+  "description": "socket-io testing",
+  "author": "I have no idea what I am doing right now",
+  "dependencies": {
+    "socket.io": ">= 1.0.6",
+    "express": ">= 4.8.4"
+  }
+}
